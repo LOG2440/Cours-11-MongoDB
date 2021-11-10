@@ -1,0 +1,15 @@
+{
+  "name": "exemple_mongoclient",
+  "version": "1.0.0",
+  "description": "Exemple de base de l'utilisation du driver NodeJS pour MongoDB",
+  "main": "db.js",
+  "scripts": {
+    "start": "node db.js",
+    "connexion_simple": "node connexion_simple.js"
+  },
+  "author": "Nikolay Radoev",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^4.1.4"
+  }
+}
