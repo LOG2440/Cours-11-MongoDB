@@ -35,6 +35,14 @@ async function getAllCourses() {
   return courses;
 }
 
+async function getNamesOnly() {
+  await openConnection();
+  const projection = { projection: { sigle: 1, _id: 0 } };
+  const courses = await collection.find({}, projection).toArray();
+  closeConnection();
+  return courses;
+}
+
 async function getCoursesBySigle(sigle) {
   await openConnection();
   const query = { sigle: sigle };
@@ -83,10 +91,11 @@ async function modifyCourse(sigle, newCredits) {
 }
 
 async function main() {
-  // await getCoursesExample();
+  await getCoursesExample();
+  // await getCoursesProjectionExample();
   // await addNewCourseExample();
   // await modifyCourseExample();
-  await deleteCourseExample();
+  // await deleteCourseExample();
 }
 
 async function getCoursesExample() {
@@ -99,13 +108,20 @@ async function getCoursesExample() {
   const log4420Courses = await getCoursesBySigle("LOG2440");
   console.log(log4420Courses);
 
-  console.log("=====COURS TRIÉS PAR CREDITS EN ORDRE DESCENDANT=====");
+  console.log("=====COURS TRIÉS PAR CREDITS EN ORDRE ASCENDANT=====");
   const sortedCoursesDesc = await getSortedCourses(true);
   console.log(sortedCoursesDesc);
 
-  console.log("=====COURS TRIÉS PAR CREDITS EN ORDRE ASCENDANT=====");
+  console.log("=====COURS TRIÉS PAR CREDITS EN ORDRE DESCENDANT=====");
   const sortedCoursesAsc = await getSortedCourses(false);
   console.log(sortedCoursesAsc);
+}
+
+async function getCoursesProjectionExample() {
+  const classes = await getNamesOnly();
+  console.log(classes);
+  const mappedClasses = classes.map((c) => c.sigle);
+  console.log(mappedClasses);
 }
 
 async function addNewCourseExample() {
