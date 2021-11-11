@@ -1,4 +1,4 @@
-# Configuration d'instances MongoDB avec Cloud Atlas :
+# Configuration d'instances MongoDB avec Cloud Atlas
  
 
 1. Créez un compte pour mongoDB : https://www.mongodb.com/cloud/atlas
