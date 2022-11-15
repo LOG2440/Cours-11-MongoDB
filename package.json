@@ -10,6 +10,6 @@
   "author": "Nikolay Radoev",
   "license": "ISC",
   "dependencies": {
-    "mongodb": "^4.1.4"
+    "mongodb": "4.11.0"
   }
 }
