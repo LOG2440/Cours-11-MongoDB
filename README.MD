@@ -36,3 +36,10 @@
 
     1. Vous pouvez créer d'autres collections en cliquant sur le bouton plus **+** à côté du nom de votre **database** que vous avez créé.
     2. Vous pouvez voir et éditer les documents faisant partie de vos collections directement à partir d'Atlas à travers l'onglet **Collections**.
+
+
+# Pour aller plus loin :
+
+L'exemple [suivant](https://gitlab.com/nikolayradoev/mongodb-example) est une évolution du projet dans cet entrepôt et est utilisé dans le cadre du cours **LOG2990**.
+
+Ce projet combine un client MongoDB avec un serveur HTTP dynamique utilisant Express pour créer un service web. Ce service est accessible à travers une API REST. Cette API peut être accédée à travers une documentation Swagger qui offre une interface web pour les différentes requêtes HTTP. Pour plus de détails, consultez le [README](https://gitlab.com/nikolayradoev/mongodb-example#documentation-swagger-m%C3%A9thode-recommand%C3%A9e) du projet.
