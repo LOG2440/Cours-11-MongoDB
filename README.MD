@@ -10,19 +10,19 @@
 3. Cliquez sur le bouton **Build a Database** pour créer votre cluster de données
 
     1. Choisissez l'option gratuite **Shared**
-    2. Choisissez votre fournisseur et région. L'option AWS en Virginie du Nord par défaut est tout à fait suffisante, mais vous pouvez choisir Google Cloud Platform ou Microsoft Azure. Vous pouvez nommer votre grappe ou laisser le nom "Cluster0" par défaut.
+    2. Choisissez votre fournisseur et région. L'option `AWS` en Virginie du Nord (`us-east-1`) par défaut est tout à fait suffisante, mais vous pouvez choisir `Google Cloud Platform` ou `Microsoft Azure`. Vous pouvez nommer votre grappe ou laisser le nom "Cluster0" par défaut.
     3. Le cluster prendra 5-10 minutes pour être fonctionnel. Vous serez avertis lorsque la création est terminée.
 
 4. Configurez les paramètres de connexion
 
     1. Créez un utilisateur pour la base de données. Vous pouvez garder l'utilisateur Admin:admin par défaut. **NB** : n'oubliez pas de prendre en note le mot de passe configuré pour votre utilisateur.
     2. Ajoutez l'adresse **0.0.0.0** pour rendre l'instance accessible à toutes les machines.
-    3. (Optionnel) Ajoutez votre adresse IP avec l'option "Add My Current IP Address" : ceci est valide seulement pour l'adresse IP que vous avez présentement.
+    3. (Optionnel) Ajoutez votre adresse IP avec l'option `Add My Current IP Address` : ceci est valide seulement pour l'adresse IP que vous avez présentement.
 
-5. Vous devriez être redirigés vers l'interface de votre nouvelle instance. Cliquez sur le bouton **Connect** pour obtenir l'URI de votre instance.
+5. Vous devrez être redirigés vers l'interface de votre nouvelle instance. Cliquez sur le bouton **Connect** pour obtenir l'URI de votre instance.
     
     1. Choisissez l'option **Connect your application** 
-    2. Mettez "Node.js" comme DRIVER et "4.1 or later" comme VERSION si ce n'est pas déjà le cas.
+    2. Mettez `Node.js` comme DRIVER et `5.5 or later` comme `VERSION` si ce n'est pas déjà le cas.
     3. Prenez la chaîne de caractères générée pour vous connecter dans la section 2. Vous pouvez y accéder à tout moment en cliquant encore sur **Connect**.
         **NB**: N'oubliez pas de remplacer \<password\> par le mot de passe de l'utilisateur créé à l'étape 4.1 (les <> doivent être enlevées aussi)
 

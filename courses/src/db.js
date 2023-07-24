@@ -1,12 +1,15 @@
-let MongoClient = require("mongodb").MongoClient;
+const { MongoClient, ServerApiVersion } = require('mongodb');
 const DB_CONSTS = require("./env");
 
 let client; // Client Mongo
 let collection;
 
 const options = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
 };
 
 async function connect(url = DB_CONSTS.DB_URL) {
@@ -24,22 +27,14 @@ async function openConnection() {
   await connect();
 }
 
-function closeConnection() {
+async function closeConnection() {
   client.close();
 }
 
 async function getAllCourses() {
   await openConnection();
   const courses = await collection.find({}).toArray();
-  closeConnection();
-  return courses;
-}
-
-async function getNamesOnly() {
-  await openConnection();
-  const projection = { projection: { sigle: 1, _id: 0 } };
-  const courses = await collection.find({}, projection).toArray();
-  closeConnection();
+  await closeConnection();
   return courses;
 }
 
@@ -47,7 +42,15 @@ async function getCoursesBySigle(sigle) {
   await openConnection();
   const query = { sigle: sigle };
   const courses = await collection.find(query).toArray();
-  closeConnection();
+  await closeConnection();
+  return courses;
+}
+
+async function getNamesOnly() {
+  await openConnection();
+  const projection = { projection: { sigle: 1, _id: 0 } };
+  const courses = await collection.find({}, projection).toArray();
+  await closeConnection();
   return courses;
 }
 
@@ -55,14 +58,33 @@ async function getSortedCourses(ascending) {
   await openConnection();
   const sortCriteria = { credits: ascending ? 1 : -1 };
   const courses = await collection.find({}).sort(sortCriteria).toArray();
-  closeConnection();
+  await closeConnection();
+  return courses;
+}
+
+async function getFirstNCourses(limit) {
+  await openConnection();
+  const courses = await collection.find({}).limit(limit).toArray();
+  await closeConnection();
+  return courses;
+}
+
+async function getLOGCoursesLessCredits(maxCredits) {
+  await openConnection();
+  const courses = await collection.find({
+    $and: [
+      { sigle: /^LOG/ },
+      { credits: { $lt: maxCredits } }
+    ]
+  }).toArray();
+  await closeConnection();
   return courses;
 }
 
 async function addCourse(course) {
   await openConnection();
   await collection.insertOne(course);
-  closeConnection();
+  await closeConnection();
 }
 
 async function deleteCourse(sigle, deleteAll) {
@@ -73,13 +95,13 @@ async function deleteCourse(sigle, deleteAll) {
   } else {
     await collection.deleteOne(filter);
   }
-  closeConnection();
+  await closeConnection();
 }
 
 async function deleteAll() {
   await openConnection();
   await collection.deleteMany({});
-  closeConnection();
+  await closeConnection();
 }
 
 async function modifyCourse(sigle, newCredits) {
@@ -87,7 +109,7 @@ async function modifyCourse(sigle, newCredits) {
   const filter = { sigle: sigle };
   const setQuery = { $set: { credits: newCredits } };
   await collection.updateOne(filter, setQuery);
-  closeConnection();
+  await closeConnection();
 }
 
 async function main() {
@@ -115,6 +137,14 @@ async function getCoursesExample() {
   console.log("=====COURS TRIÉS PAR CREDITS EN ORDRE DESCENDANT=====");
   const sortedCoursesAsc = await getSortedCourses(false);
   console.log(sortedCoursesAsc);
+
+  console.log("=====2 PREMIERS COURS=====");
+  const first2Courses = await getFirstNCourses(2);
+  console.log(first2Courses);
+
+  console.log("=====COURS LOG MOINS QUE 4 CREDITS=====");
+  const logCoursesLessThan4Credits = await getLOGCoursesLessCredits(4);
+  console.log(logCoursesLessThan4Credits);
 }
 
 async function getCoursesProjectionExample() {
