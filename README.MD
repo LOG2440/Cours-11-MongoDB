@@ -1,3 +1,12 @@
+# Persistance des données avec MongoDB
+
+Cet entrepôt contient des exemples de l'utilisation de la base de données orientée documents `MongoDB` pour avoir une persistance à distance. Les exemples sont les suivantes :
+
+- [introduction](./introduction/README.MD) : exemple de base de connexion et lecture des données sur une instance MongoDB.
+- [courses](./courses/README.md) : ensemble d'exemples de différentes requêtes vers une instance MongoDB pour lire et manipuler des données.
+
+Avant d'exécuter les exemples, assurez-vous d'avoir configuré votre instance de MongoDB. Vous pouvez utiliser une instance locale sur votre machine ou utiliser le service [MongoDB Cloud](https://cloud.mongodb.com/) en ligne. Consultez la section suivante pour configurer votre instance MongoDB Cloud.
+
 # Configuration d'instances MongoDB avec Cloud Atlas
  
 
@@ -25,7 +34,6 @@
     2. Mettez `Node.js` comme DRIVER et `5.5 or later` comme `VERSION` si ce n'est pas déjà le cas.
     3. Prenez la chaîne de caractères générée pour vous connecter dans la section 2. Vous pouvez y accéder à tout moment en cliquant encore sur **Connect**.
         **NB**: N'oubliez pas de remplacer \<password\> par le mot de passe de l'utilisateur créé à l'étape 4.1 (les <> doivent être enlevées aussi)
-
 
 
 ## Création d'une collection :
