@@ -4,12 +4,11 @@
   "description": "Exemple de base de l'utilisation du driver NodeJS pour MongoDB",
   "main": "src/db.js",
   "scripts": {
-    "start": "node ./src/db.js",
-    "connexion_simple": "node ./src/connexion_simple.js"
+    "start": "node ./src/db.js"
   },
   "author": "Nikolay Radoev",
-  "license": "ISC",
+  "license": "CC-BY-3.0",
   "dependencies": {
-    "mongodb": "^4.1.4"
+    "mongodb": "5.7.0"
   }
 }

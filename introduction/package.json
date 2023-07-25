@@ -1,0 +1,14 @@
+{
+  "name": "introduction",
+  "version": "1.0.0",
+  "description": "Exemple de connexion et lecture d'une instance de MongoDB",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "author": "Nikolay Radoev",
+  "license": "CC-BY-3.0",
+  "dependencies": {
+    "mongodb": "^5.7.0"
+  }
+}
