@@ -49,6 +49,17 @@ Le fichier [server.js](./src/server.js) expose les fonctions de `db.js` sous for
 
 Pour exécuter uniquement les exemples de la ligne de commande sans le serveur : `npm run start:db`.
 
+### Documentation interactive (Swagger UI)
+
+Une interface Swagger UI est disponible pour explorer et tester toutes les  routes directement depuis le navigateur.
+
+- **URL** : [http://localhost:3000/api](http://localhost:3000/api) (ou simplement [http://localhost:3000](http://localhost:3000) qui redirige automatiquement)
+- Les routes sont regroupées par méthode HTTP : **GET**, **POST**, **PATCH**, **DELETE**, et **ADMIN** (réinitialisation).
+- Chaque route indique les paramètres attendus, le format du corps de requête, ainsi que les codes de retour possibles.
+- Le bouton **Try it out** permet d'envoyer de vraies requêtes à l'API et d'observer les réponses en direct.
+
+> Le serveur doit être démarré (`npm start`) et une instance MongoDB doit être accessible pour que les requêtes fonctionnent.
+
 ### Méthodes exposées
 
 Voici les méthodes exposées par le serveur HTTP pour manipuler les données de la base de données :
@@ -62,7 +73,7 @@ Voici les méthodes exposées par le serveur HTTP pour manipuler les données de
 | `GET`    | `/courses/first`     | Retourne les N premiers cours                            | `?limit=N` (défaut : 1)                                                | `200` `course[]`                                                             |
 | `GET`    | `/courses/log`       | Retourne les cours LOG avec moins de N crédits           | `?maxCredits=N` (défaut : 4)                                           | `200` `course[]`                                                             |
 | `GET`    | `/courses/:sigle`    | Retourne les cours correspondant au sigle                | —                                                                      | `200` `course[]` · `404` message d'erreur                                    |
-| `POST`   | `/courses`           | Ajoute un cours — corps : `course`                       | —                                                                      | `201` `course` · `409` sigle déjà existant                                   |
+| `POST`   | `/courses`           | Ajoute un cours — corps : `course`                       | —                                                                      | `201` `course` · `400` sigle ou crédits manquants · `409` sigle déjà existant |
 | `PATCH`  | `/courses/:sigle`    | Modifie les crédits d'un cours — corps : `{ credits }`   | —                                                                      | `200` `{ sigle: string, credits: number }` · `404` sigle introuvable          |
 | `DELETE` | `/courses`           | Supprime tous les cours de la collection                 | —                                                                      | `200` message de confirmation                                                |
 | `DELETE` | `/courses/:sigle`    | Supprime un ou plusieurs cours par sigle                 | `?deleteAll=false` (défaut) \| `true` pour supprimer tous les doublons | `200` `{ sigle: string }` · `404` sigle introuvable                          |

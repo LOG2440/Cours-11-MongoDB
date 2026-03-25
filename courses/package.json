@@ -11,6 +11,8 @@
   "license": "CC-BY-3.0",
   "dependencies": {
     "express": "4.22.1",
-    "mongodb": "7.1.1"
+    "mongodb": "7.1.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   }
 }

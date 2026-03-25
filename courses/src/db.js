@@ -136,6 +136,7 @@ module.exports = {
   deleteCourse,
   deleteAll,
   modifyCourse,
+  populateDB,
 };
 
 async function getCoursesExample() {
