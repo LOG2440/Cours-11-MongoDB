@@ -63,8 +63,8 @@ Voici les méthodes exposées par le serveur HTTP pour manipuler les données de
 | `GET`    | `/courses/log`       | Retourne les cours LOG avec moins de N crédits           | `?maxCredits=N` (défaut : 4)                                           | `200` `course[]`                                                             |
 | `GET`    | `/courses/:sigle`    | Retourne les cours correspondant au sigle                | —                                                                      | `200` `course[]` · `404` message d'erreur                                    |
 | `POST`   | `/courses`           | Ajoute un cours — corps : `course`                       | —                                                                      | `201` `course` · `409` sigle déjà existant                                   |
-| `PATCH`  | `/courses/:sigle`    | Modifie les crédits d'un cours — corps : `{ credits }`   | —                                                                      | `200` `{ sigle: string, credits: number }`                                   |
+| `PATCH`  | `/courses/:sigle`    | Modifie les crédits d'un cours — corps : `{ credits }`   | —                                                                      | `200` `{ sigle: string, credits: number }` · `404` sigle introuvable          |
 | `DELETE` | `/courses`           | Supprime tous les cours de la collection                 | —                                                                      | `200` message de confirmation                                                |
-| `DELETE` | `/courses/:sigle`    | Supprime un ou plusieurs cours par sigle                 | `?deleteAll=false` (défaut) \| `true` pour supprimer tous les doublons | `200` `{ sigle: string }`                                                    |
+| `DELETE` | `/courses/:sigle`    | Supprime un ou plusieurs cours par sigle                 | `?deleteAll=false` (défaut) \| `true` pour supprimer tous les doublons | `200` `{ sigle: string }` · `404` sigle introuvable                          |
 
 > Tous les endpoints retournent `500` avec un message d'erreur en cas d'erreur serveur.

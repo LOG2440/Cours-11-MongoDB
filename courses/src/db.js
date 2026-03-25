@@ -2,6 +2,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const DB_CONSTS = require("./env");
 
 let client; // Client Mongo
+/** @type {import('mongodb').Collection} */
 let collection;
 
 const options = {
@@ -91,12 +92,14 @@ async function addCourse(course) {
 async function deleteCourse(sigle, deleteAll) {
   await openConnection();
   const filter = { sigle: sigle };
+  let result;
   if (deleteAll) {
-    await collection.deleteMany(filter);
+    result = await collection.deleteMany(filter);
   } else {
-    await collection.deleteOne(filter);
+    result = await collection.deleteOne(filter);
   }
   await closeConnection();
+  return result.deletedCount > 0;
 }
 
 async function deleteAll() {
@@ -109,8 +112,9 @@ async function modifyCourse(sigle, newCredits) {
   await openConnection();
   const filter = { sigle: sigle };
   const setQuery = { $set: { credits: newCredits } };
-  await collection.updateOne(filter, setQuery);
+  const result = await collection.updateOne(filter, setQuery);
   await closeConnection();
+  return result.matchedCount === 1;
 }
 
 async function main() {

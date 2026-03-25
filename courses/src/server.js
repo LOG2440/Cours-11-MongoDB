@@ -94,7 +94,10 @@ router.post("/", async (req, res) => {
 router.patch("/:sigle", async (req, res) => {
   try {
     const { credits } = req.body;
-    await db.modifyCourse(req.params.sigle, credits);
+    const updated = await db.modifyCourse(req.params.sigle, credits);
+    if (!updated) {
+      return res.status(404).json({ error: `Aucun cours trouvé pour le sigle : ${req.params.sigle}` });
+    }
     res.json({ sigle: req.params.sigle, credits });
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -115,7 +118,10 @@ router.delete("/", async (req, res) => {
 router.delete("/:sigle", async (req, res) => {
   try {
     const deleteAll = req.query.deleteAll === "true";
-    await db.deleteCourse(req.params.sigle, deleteAll);
+    const deleted = await db.deleteCourse(req.params.sigle, deleteAll);
+    if (!deleted) {
+      return res.status(404).json({ error: `Aucun cours trouvé pour le sigle : ${req.params.sigle}` });
+    }
     res.json({ sigle: req.params.sigle });
   } catch (e) {
     res.status(500).json({ error: e.message });
