@@ -6,6 +6,14 @@ Vous pouvez exécuter le script à l'aide de la commande `npm start`. N'oubliez 
 
 Vous devez modifier les 3 constantes dans le fichier [env.js](./src/env.js) pour pouvoir vous connecter à votre instance MongoDB et la manipuler.
 
+Les données traités dans l'exemple sont représentées par un objet `course` ayant le format suivant : 
+```js
+{ 
+  sigle: string, 
+  credits: number
+}
+```
+
 ## Exécution du code
 
 La fonction `main()` contient les exemples d'appels à la base de données. Vous pouvez les essayer dans l'ordre que vous voulez. 
@@ -34,3 +42,29 @@ La fonction `deleteCourseExample()` présente un exemple de suppression d'un ou 
 Vous êtes encouragés de modifier le code fourni pour tester l'intéraction entre le driver votre instance MongoDB.
 
 La méthode `populateDB()` permet de supprimer tous les éléments de votre collection et en ajouter quelques documents par défaut. Cette méthode est exécutée au début de la majorité des méthodes appelées dans `main()` pour s'assurer que l'état initial de la collection est toujours le même.
+
+## Serveur HTTP (API REST)
+
+Le fichier [server.js](./src/server.js) expose les fonctions de `db.js` sous forme d'une API REST avec Express. Démarrez le serveur avec `npm start` (port 3000).
+
+Pour exécuter uniquement les exemples de la ligne de commande sans le serveur : `npm run start:db`.
+
+### Méthodes exposées
+
+Voici les méthodes exposées par le serveur HTTP pour manipuler les données de la base de données :
+
+
+| Méthode  | Chemin               | Description                                              | Paramètres                                                             | Codes de retour                                                              |
+| -------- | -------------------- | -------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `GET`    | `/courses`           | Retourne tous les cours                                  | —                                                                      | `200` `course[]`                                                             |
+| `GET`    | `/courses/names`     | Retourne uniquement les sigles (projection)              | —                                                                      | `200` `{ sigle: string }[]`                                                  |
+| `GET`    | `/courses/sorted`    | Retourne les cours triés par crédits                     | `?ascending=true` (défaut) \| `false`                                  | `200` `course[]` trié                                                        |
+| `GET`    | `/courses/first`     | Retourne les N premiers cours                            | `?limit=N` (défaut : 1)                                                | `200` `course[]`                                                             |
+| `GET`    | `/courses/log`       | Retourne les cours LOG avec moins de N crédits           | `?maxCredits=N` (défaut : 4)                                           | `200` `course[]`                                                             |
+| `GET`    | `/courses/:sigle`    | Retourne les cours correspondant au sigle                | —                                                                      | `200` `course[]` · `404` message d'erreur                                    |
+| `POST`   | `/courses`           | Ajoute un cours — corps : `course`                       | —                                                                      | `201` `course`                                                               |
+| `PATCH`  | `/courses/:sigle`    | Modifie les crédits d'un cours — corps : `{ credits }`   | —                                                                      | `200` `{ sigle: string, credits: number }`                                   |
+| `DELETE` | `/courses`           | Supprime tous les cours de la collection                 | —                                                                      | `200` message de confirmation                                                |
+| `DELETE` | `/courses/:sigle`    | Supprime un ou plusieurs cours par sigle                 | `?deleteAll=false` (défaut) \| `true` pour supprimer tous les doublons | `200` `{ sigle: string }`                                                    |
+
+> Tous les endpoints retournent `500` avec un message d'erreur en cas d'erreur serveur.
