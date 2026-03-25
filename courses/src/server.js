@@ -82,6 +82,9 @@ router.post("/", async (req, res) => {
     await db.addCourse(course);
     res.status(201).json(course);
   } catch (e) {
+    if (e.code === 11000) { // Erreur de clé dupliquée de MongoDB
+      return res.status(409).json({ error: `Un cours avec le sigle "${req.body.sigle}" existe déjà` });
+    }
     res.status(500).json({ error: e.message });
   }
 });

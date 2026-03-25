@@ -16,6 +16,7 @@ async function connect(url = DB_CONSTS.DB_URL) {
   try {
     client = await MongoClient.connect(url, options);
     collection = client.db(DB_CONSTS.DB_DB).collection(DB_CONSTS.DB_COLLECTION);
+    await collection.createIndex({ sigle: 1 }, { unique: true });
     return client;
   } catch {
     console.error("CONNECTION ERROR. TRY AGAIN");
