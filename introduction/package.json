@@ -9,6 +9,6 @@
   "author": "Nikolay Radoev",
   "license": "CC-BY-3.0",
   "dependencies": {
-    "mongodb": "6.8.0"
+    "mongodb": "7.1.1"
   }
 }
