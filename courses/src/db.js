@@ -120,6 +120,19 @@ async function main() {
   // await deleteCourseExample();
 }
 
+module.exports = {
+  getAllCourses,
+  getCoursesBySigle,
+  getNamesOnly,
+  getSortedCourses,
+  getFirstNCourses,
+  getLOGCoursesLessCredits,
+  addCourse,
+  deleteCourse,
+  deleteAll,
+  modifyCourse,
+};
+
 async function getCoursesExample() {
   await populateDB(); // données fictives
   console.log("=====TOUS LES COURS DE LA COLLECTION=====");
@@ -202,4 +215,6 @@ async function populateDB() {
   await addCourse({ sigle: "LOG3900", credits: 4 });
 }
 
-main();
+if (require.main === module) {
+  main();
+}
